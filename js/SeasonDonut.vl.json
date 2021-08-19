@@ -1,0 +1,56 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width":400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/weihan-tan0035/FIT3179_Assignment/main/data/seasonInfected.csv"
+  },
+  "mark": {"type": "arc", "innerRadius": 60},
+  "params": [
+    {
+      "name": "Season_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "2009-2010",
+          "2010-2011",
+          "2011-2012",
+          "2012-2013",
+          "2013-2014",
+          "2014-2015",
+          "2015-2016",
+          "2016-2017",
+          "2017-2018",
+          "2018-2019"
+        ],
+        "labels": [
+          "Show All Seasons",
+          "2009-2010",
+          "2010-2011",
+          "2011-2012",
+          "2012-2013",
+          "2013-2014",
+          "2014-2015",
+          "2015-2016",
+          "2016-2017",
+          "2017-2018",
+          "2018-2019"
+        ],
+        "name": "Season:"
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "Season_selection==null||datum.Season==Season_selection"},
+    {"calculate": "datum.Count/datum.Population*100", "as": "popPercentage"}
+  ],
+  "encoding": {
+    "theta": {"field": "Count", "aggregate": "sum", "type": "quantitative"},
+    "color": {
+      "field": "Status",
+      "type": "nominal",
+      "scale": {"range": ["#3333ff", "#aaaa11"]}
+    }
+  },
+  "view": {"stroke": null}
+}
